@@ -27,6 +27,8 @@ const ReadmeViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
         }
 
         dispatch(fileActions.saveFile(Data))
+        
+        setEditingStart(false)
     }
     const fileView = (listing = []) => {
 

@@ -5,9 +5,10 @@ import fileActions from "../store/actions/file-actions";
 import Modal from "./Modal";
 import { useState } from "react";
 import FileName from "./FileName";
+import toast from "react-hot-toast";
 
 const CreateFolder = ({ type }) => {
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const [fName, setfName] = useState({
         fname: "",
         ext: ""
@@ -16,7 +17,9 @@ const CreateFolder = ({ type }) => {
 
     const fileCreation = () => {
 
-        if(fName.fname!=""){
+        console.log(fName,"fNamefName")
+
+        if(fName.fname==""){
             toast.error("Folder name is requireed")
             return 
         }

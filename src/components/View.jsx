@@ -22,12 +22,12 @@ const View = ({ type }) => {
     
 
     return <>
-        <div>
+        <div className="">
             {
-                type.type == "file" ? <p className="text-blue-400 bg-black  pl-8 text-[18px] p-2" onClick={()=>{
+                type.type == "file" ? <p className="text-blue-400 bg-black  pl-8 text-[18px] m-2  border" onClick={()=>{
                     viewFile(type.path)
                 }}>{type.name}</p> :
-                    <div className="flex flex-col align-middle pl-2">
+                    <div className="flex flex-col align-middle pl-2 border m-2">
                         <div className="flex flex-row justify-between">
                             <div className="flex flex-row items-center">
                                 <span onClick={() => {

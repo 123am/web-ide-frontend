@@ -27,6 +27,7 @@ const EDFileViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
         }
 
         dispatch(fileActions.saveFile(Data))
+        setEditingStart(false)
     }
 
 

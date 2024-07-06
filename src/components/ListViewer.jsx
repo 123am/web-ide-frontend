@@ -23,11 +23,13 @@ const ListViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
 
         let Data = {
             path: oneFile.path,
-            content: listing.length>0?listing:List,
+            content: listing.length>0?listing.join("-lspi-"):List.join("-lspi-"),
             fileType:"li"
         }
         console.log(oneFile.path, List, "oneFileList")
         dispatch(fileActions.saveFile(Data))
+        
+        setEditingStart(false)
     }
     const submitFun = () => {
         if (text == "") {
@@ -38,6 +40,8 @@ const ListViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
             return [...prev, text]
         })
         setText("")
+
+        // setTextEdit([...List,text])
 
         fileSave([...List,text])
         

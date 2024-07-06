@@ -43,12 +43,14 @@ const fileActions = {
 
         }
     },
-    saveFile: (filedata) => async (dispatch, _) => {
+    saveFile: (filedata,cb=()=>{}) => async (dispatch, _) => {
         try {       
             const resp = await ApiCaller.postCall(Urls.saveFile,filedata)
+            toast.success(resp.data.msg)
+            cb()
             // dispatch(VIEW_FILE(resp.data.data))
         } catch (error) {
-
+            toast.error(error.response.data.msg)
         }
     },
     createDirectory: (data, cb) => async (dispatch, _) => {

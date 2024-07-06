@@ -10,7 +10,7 @@ import FileName from "./FileName";
 const CreateFile = ({ type }) => {
 
 
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const [fName, setfName] = useState({
         fname: "",
         ext: ""
