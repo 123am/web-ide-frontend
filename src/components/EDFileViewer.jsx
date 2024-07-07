@@ -26,7 +26,7 @@ const EDFileViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
             fileType: "ed"
         }
 
-        dispatch(fileActions.saveFile(Data))
+        dispatch(fileActions.saveFile(Data,false))
         setEditingStart(false)
     }
 
@@ -59,14 +59,14 @@ const EDFileViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
 
         <div className="relative">
 
-            <button className="absolute right-0 -top-2.5 text-blue-400" onClick={() => {
+            <button className="absolute right-0 -bottom-2 border-2 border-bordercolor hover:text-col hover:bg-primary text-primary p-2" onClick={() => {
                 fileSave()
             }}>Save File</button>
         </div>
         <textarea onChange={(e) => {
             setTextEdit(e.target.value)
             setEditingStart(true)
-        }} className="my-4 border-2 h-[100%] w-[100%] text-black" value={textEdit}>
+        }} className="my-4 border-2 border-bordercolor h-[100%] w-[100%] text-col bg-transparent p-4" value={textEdit}>
         </textarea>
 
     </>

@@ -24,20 +24,20 @@ const View = ({ type }) => {
     return <>
         <div className="">
             {
-                type.type == "file" ? <p className="text-blue-400 bg-black  pl-8 text-[18px] m-2  border" onClick={()=>{
+                type.type == "file" ? <p className="text-primary bg-background pl-8 text-[18px] ml-2" onClick={()=>{
                     viewFile(type.path)
                 }}>{type.name}</p> :
-                    <div className="flex flex-col align-middle pl-2 border m-2">
+                    <div className="flex flex-col align-middle border-t-2 border-bordercolor pl-2 ml-2">
                         <div className="flex flex-row justify-between">
                             <div className="flex flex-row items-center">
                                 <span onClick={() => {
                                     setArr(prev => !prev)
                                 }}>
                                     {
-                                        arr ? <span className="text-white">< FaChevronUp /></span> : <span className="text-white"><FaChevronDown /></span>
+                                        arr ? <span className="text-col">< FaChevronUp /></span> : <span className="text-col"><FaChevronDown /></span>
                                     }
                                 </span>
-                                <p className="text-blue-400 bg-black ml-0 text-[18px] p-2">
+                                <p className="text-primary bg-background ml-0 text-[18px] p-2">
                                     {type.name}
                                 </p>
                             </div>

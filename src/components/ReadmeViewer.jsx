@@ -26,7 +26,7 @@ const ReadmeViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
             fileType: "ed"
         }
 
-        dispatch(fileActions.saveFile(Data))
+        dispatch(fileActions.saveFile(Data,false))
         
         setEditingStart(false)
     }
@@ -75,14 +75,14 @@ const ReadmeViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
 
         <div className="relative">
 
-            <button className="absolute right-0 -top-2.5 text-blue-400" onClick={() => {
+            <button className="absolute right-0 -bottom-2 border-2 border-bordercolor hover:text-col hover:bg-primary text-primary p-2" onClick={() => {
                 fileSave()
             }}>Save File</button>
         </div>
         <div className="flex flex-row justify-center">
             <div className="flex flex-row w-80">
                 <input
-                    class="shadow mx-2 appearance-none border border-red-500 rounded w-full py-3 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    class="shadow mx-2 appearance-none border border-bordercolor rounded w-full py-3 px-3 text-col mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="fileName"
                     type="file"
                     onChange={(e) => {
@@ -92,7 +92,7 @@ const ReadmeViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
 
 
                 <button
-                    class="bg-red-500 mx-2 hover:bg-red-700 h-12  text-white py-0 px-1 rounded focus:outline-none focus:shadow-outline"
+                    class="bg-red-500 mx-2 hover:bg-red-700 h-12  text-col py-0 px-1 rounded focus:outline-none focus:shadow-outline"
                     onClick={() => {
                         fileView()
                     }}
@@ -104,7 +104,7 @@ const ReadmeViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
             </div>
         </div>
 
-        <div className="text-white overflow-scroll h-[100%]" dangerouslySetInnerHTML={{__html: oneReadmeFile}}>
+        <div className="text-col overflow-scroll h-[94%]" dangerouslySetInnerHTML={{__html: oneReadmeFile}}>
         </div>
 
     </>

@@ -1,68 +1,140 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
 import FileName from './FileName';
 import Modal from './Modal';
 import { IoAdd } from "react-icons/io5";
+import { useDispatch, useSelector } from 'react-redux';
+import fileActions from '../store/actions/file-actions';
+import toast from 'react-hot-toast';
 
 const DNDFileViewer = () => {
+    const [open, setOpen] = useState(false);
+    const [btnName, setBtnName] = useState("");
+    const [label, setLabel] = useState("");
+    const [status, setStatus] = useState("");
+    const [placeholder, setPlaceholder] = useState("");
+    const [fName, setFName] = useState({ 
+        "fname": "",
+        "ext":"#ff00ff"
+     });
+    const [containers, setContainers] = useState({});
+    const [containersConf, setContainersConf] = useState({});
+    const { oneFile } = useSelector((state) => {
+        console.log(state.file)
 
-
-    const [open, setOpen] = useState(false)
-    const [btnName, setbtnName] = useState("")
-    const [label, setLabel] = useState("")
-    const [status, setstatus] = useState("")
-    const [placeholder, setplaceholder] = useState("")
-    const [fName, setfName] = useState({
-        "fname": ""
+        return state.file
     })
 
-    const [containers, setContainers] = useState({});
+    const dispatch = useDispatch()
 
+    const fileSave = (listing = {}) => {
 
+        let Data = {
+            path: oneFile.path,
+            content: JSON.stringify(listing),
+            fileType: "ed"
+        }
 
-
+        dispatch(fileActions.saveFile(Data, true))
+    }
 
     const statusCreation = () => {
-        console.log(fName, status, "fNamefNamefName")
 
-        if (status == "") {
-            setContainers((prev) => {
-                return {
-                    ...prev,
-                    [fName.fname]: []
+
+        if(fName.fname==""){
+
+            toast.error(label+" is not blank")
+            return
+        }
+        if (status === "") {
+
+
+
+            console.log(fName,"fNamefName")
+
+            setContainers((prev) => ({
+                ...prev,
+                [fName.fname]: []
+            }));
+
+            setContainersConf((prev) => ({
+                ...prev,
+                [fName.fname]: {
+                    "bgcolor": fName.ext
+                }
+            }));
+
+            fileSave({
+                containers: {
+                    ...containers,
+                    [fName.fname]:[]
+                },
+                containersConf: {
+                    ...containersConf,
+                    [fName.fname]:{
+                        "bgcolor": fName.ext
+                    }
                 }
             })
         } else {
-            setContainers((prev) => {
-                return {
-                    ...prev,
-                    [status]: [...prev[status], fName.fname]
-                }
+            setContainers((prev) => ({
+                ...prev,
+                [status]: [...prev[status], {
+                    name: fName.fname,
+                    id: Date.now()
+                }]
+            }));
+
+            fileSave({
+                containers: {
+                    ...containers,
+                    [status]:[...containers[status],{
+                        name: fName.fname,
+                        id: Date.now()
+                    }]
+                },
+                containersConf: containersConf
             })
         }
 
-    }
-    const onDragStart = (e, item, container) => {
-        e.dataTransfer.setData('item', item);
+        
+    };
+
+
+
+    console.log(containers,"containerscontainerscontainers")
+
+    const onDragStart = (e, itemId, container) => {
+        e.dataTransfer.setData('itemId', itemId);
         e.dataTransfer.setData('sourceContainer', container);
     };
 
     const onDrop = (e, targetContainer) => {
-        const item = e.dataTransfer.getData('item');
+        const itemId = e.dataTransfer.getData('itemId');
         const sourceContainer = e.dataTransfer.getData('sourceContainer');
 
         setContainers((prevState) => {
-
-            console.log(prevState, sourceContainer, prevState[sourceContainer], "prevState")
-            const sourceItems = prevState[sourceContainer].filter(i => i !== item);
+            const sourceItems = prevState[sourceContainer].filter(item => item.id !== Number(itemId));
+            const item = prevState[sourceContainer].find(item => item.id === Number(itemId));
             const targetItems = [...prevState[targetContainer], item];
-
+            fileSave({
+                containers: {
+                    ...containers,
+                    [sourceContainer]: sourceItems,
+                    [targetContainer]: targetItems,
+                },
+                containersConf: containersConf
+            })
             return {
                 ...prevState,
                 [sourceContainer]: sourceItems,
                 [targetContainer]: targetItems,
             };
         });
+
+
+
+
 
         console.log('Parent Div ID:', targetContainer);
     };
@@ -72,67 +144,75 @@ const DNDFileViewer = () => {
     };
 
 
+    console.log(containersConf,"containersConfcontainersConf")
 
 
-
+    useEffect(() => {
+        setContainers(oneFile.content != "" ? JSON.parse(oneFile.content).containers ? JSON.parse(oneFile.content).containers : {} : {})
+        setContainersConf(oneFile.content != "" ? JSON.parse(oneFile.content).containersConf ? JSON.parse(oneFile.content).containersConf : {} : {})
+    }, [oneFile.path])
     return (
         <>
             <div className='flex flex-row'>
-                <div className='w-[32%] p-2 m-2'>
-                    <div className='flex justify-between'>
+                <div className='w-[24%] p-2 m-2'>
+                    <div className='flex justify-between '>
                         <h1>Status</h1>
-                        <button className='flex items-center px-4 border m-2 h-6 rounded-full' onClick={() => {
-                            setOpen(prev => !prev)
-                            setplaceholder("Enter a Status.........")
-                            setbtnName("Add Status")
-                            setLabel("Status Name")
-                            setstatus("")
-                        }}><IoAdd /> Add</button>
+                        <button
+                            className='flex items-center px-4 border border-bordercolor m-2 h-6 rounded-full'
+                            onClick={() => {
+                                setOpen(true);
+                                setPlaceholder("Enter a Status.........");
+                                setBtnName("Add Status");
+                                setLabel("Status Name");
+                                setStatus("");
+                            }}
+                        >
+                            <IoAdd /> Add
+                        </button>
                     </div>
-                    {
-                        Object.entries(containers).map((itm, index) => {
-                            return <h1>{itm[0]}</h1>
-                        })
-                    }
+                    {Object.keys(containers).map((status, index) => (
+                        <h1 className='p-1 m-4' key={index} style={{backgroundColor:containersConf[status]["bgcolor"]}}>{status}</h1>
+                    ))}
                 </div>
 
-                <div className="flex overflow-x-scroll overflow-y-hidden" >
-                    {
-                        Object.entries(containers).map((itm, index) => {
-                            return <>
-                                <div className='flex flex-col border-2'>
-                                    <div className='flex flex-row justify-between content-center m-2'>
-                                        <h1>{itm[0]}</h1>
-                                        <button className='flex items-center px-4 border m-2 h-6 rounded-full' onClick={() => {
-                                            setOpen(prev => !prev)
-                                            setplaceholder("Enter a task.........")
-                                            setbtnName("Add Task")
-                                            setLabel("Task Name")
-                                            setstatus(itm[0])
-                                        }}><IoAdd /> Add</button>
-                                    </div>
-                                    {/* <h1>{"container" + (index + 1)}</h1> */}
+                <div className="flex overflow-x-scroll overflow-y-hidden scrollbar border border-bordercolor">
+                    {Object.entries(containers).map(([status, items], index) => (
+                        <div key={index} className='flex flex-col border-2 border-bordercolor m-1'>
+                            <div className='flex flex-row justify-between content-center m-2'>
+                                <h1>{status}</h1>
+                                <button
+                                    className='flex items-center px-4 border border-bordercolor m-2 h-6 rounded-full'
+                                    onClick={() => {
+                                        setOpen(true);
+                                        setPlaceholder("Enter a task.........");
+                                        setBtnName("Add Task");
+                                        setLabel("Task Name");
+                                        setStatus(status);
+                                    }}
+                                >
+                                    <IoAdd /> Add
+                                </button>
+                            </div>
+                            <div
+                                className="container overflow-x-scroll scrollbar"
+                                id={status}
+                                onDrop={(e) => onDrop(e, status)}
+                                onDragOver={onDragOver}
+                            >
+                                {items.map((item) => (
                                     <div
-                                        className="container overflow-x-scroll"
-                                        id={itm[0]}
-                                        onDrop={(e) => onDrop(e, itm[0])}
-                                        onDragOver={onDragOver}
+                                        key={item.id}
+                                        style={{ backgroundColor: containersConf[status]["bgcolor"]}}
+                                        className="draggable w-48 min-h-24"
+                                        draggable
+                                        onDragStart={(e) => onDragStart(e, item.id, status)}
                                     >
-                                        {containers[itm[0]].map((item) => (
-                                            <div
-                                                key={item}
-                                                className="draggable w-48 h-24"
-                                                draggable
-                                                onDragStart={(e) => onDragStart(e, item, itm[0])}
-                                            >
-                                                {item}
-                                            </div>
-                                        ))}
+                                        {item.name}
                                     </div>
-                                </div>
-                            </>
-                        })
-                    }
+                                ))}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
@@ -142,7 +222,7 @@ const DNDFileViewer = () => {
                 child={
                     <FileName
                         fName={fName}
-                        setfName={setfName}
+                        setfName={setFName}
                         submitFun={() => { statusCreation() }}
                         label={label}
                         btnName={btnName}
@@ -155,6 +235,3 @@ const DNDFileViewer = () => {
 };
 
 export default DNDFileViewer;
-
-
-// "Status Name"

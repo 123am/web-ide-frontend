@@ -34,7 +34,7 @@ const IDE = () => {
             fileType: "ed"
         }
 
-        dispatch(fileActions.saveFile(Data,cb))
+        dispatch(fileActions.saveFile(Data,false,cb))
         setEditingStart(false)
 
         // dispatch(fileActions.saveFile())
@@ -49,7 +49,7 @@ const IDE = () => {
         "note": <DNDFileViewer setEditingStart={setEditingStart} textEdit={textEdit} setTextEdit={setTextEdit} />,
     }
     return <>
-        <div className="p-4 bg-black w-[75vw] h-full">
+        <div className="p-4 bg-background w-[75vw] h-full">
 
 
             {
@@ -57,12 +57,12 @@ const IDE = () => {
 
                     <div className="flex flex-row justify-between items-start">
                         <div className="flex flex-col items-start my-4">
-                            <p className="text-blue-400">File Name : {oneFile.name} </p>
-                            <p className="text-blue-400">File Extension : {oneFile.ext} </p>
-                            <p className="text-blue-400">File Path : {oneFile.path} </p>
+                            <p className="text-primary">File Name : {oneFile.name} </p>
+                            <p className="text-primary">File Extension : {oneFile.ext} </p>
+                            <p className="text-primary">File Path : {oneFile.path} </p>
                         </div>
 
-                        <div className="flex flex-col">
+                        <div className="flex  flex-col">
                             <button onClick={() => {
 
                                 if (editingStart) {
@@ -101,7 +101,7 @@ const IDE = () => {
                                 } else {
                                     fileClose()
                                 }
-                            }}>Close File</button>
+                            }} className="border-bordercolor border p-2 hover:bg-secondary">Close File</button>
                         </div>
                     </div>
 
@@ -110,7 +110,7 @@ const IDE = () => {
                             filePathComponent[oneFile.ext]
                         }
                     </div>
-                </> : <p className="text-red-400">Please select file.</p>
+                </> : <p className="text-secondary">Please select file.</p>
 
 
             }

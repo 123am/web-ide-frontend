@@ -36,7 +36,7 @@ const CreateFile = ({ type }) => {
                 ext: ""
             })
         }}
-            className="p-0 m-1 text-white">
+            className="p-1 border border-bordercolor m-0 text-col ">
             <FaFile />
         </span>
 

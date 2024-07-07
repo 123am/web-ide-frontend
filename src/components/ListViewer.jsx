@@ -27,7 +27,7 @@ const ListViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
             fileType:"li"
         }
         console.log(oneFile.path, List, "oneFileList")
-        dispatch(fileActions.saveFile(Data))
+        dispatch(fileActions.saveFile(Data,false))
         
         setEditingStart(false)
     }
@@ -64,14 +64,14 @@ const ListViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
 
         <div className="relative">
 
-            <button className="absolute right-0 text-blue-400" onClick={() => {
+            <button className="absolute right-0 -bottom-2 border-2 border-bordercolor hover:text-col hover:bg-primary text-primary p-2" onClick={() => {
                 fileSave()
             }}>Save File</button>
         </div>
         <div className="flex flex-row justify-center">
             <div className="flex flex-row w-80">
                 <input
-                    class="shadow mx-2 appearance-none border border-red-500 rounded w-full py-3 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    class="shadow mx-2 appearance-none border border-bordercolor rounded w-full py-3 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="fileName"
                     type="text"
                     onChange={(e) => {
@@ -82,7 +82,7 @@ const ListViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
 
 
                 <button
-                    class="bg-red-500 mx-2 hover:bg-red-700 h-12  text-white py-0 px-1 rounded focus:outline-none focus:shadow-outline"
+                    class="bg-primary mx-2 hover:bg-red-700 h-12  text-col py-0 px-1 rounded focus:outline-none focus:shadow-outline"
                     onClick={() => {
                         submitFun()
                     }}
@@ -97,11 +97,11 @@ const ListViewer = ({ setEditingStart, textEdit, setTextEdit }) => {
 
         </div>
 
-        <div className="flex flex-col items-center h-full overflow-y-scroll">
+        <div className="flex flex-col items-center  h-[90%] overflow-y-scroll ">
             {
                 List.map((itm) => {
-                    return <div className="w-96 bg-neutral-800 flex h-12 m-2 p-3">
-                        <p className="text-white items-center">{itm}</p>
+                    return <div className="w-96 bg-neutral-800 border shadow-md shadow-slate-400 border-bordercolor flex h-12 m-2 p-3">
+                        <p className="text-col items-center">{itm}</p>
                     </div>
                 })
             }

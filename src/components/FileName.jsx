@@ -12,7 +12,7 @@ const FileName = ({ fName, setfName, submitFun, label = "", placeholder = "", bt
 
             <div className="flex flex-row">
                 <input
-                    class="shadow mx-2 appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    class="shadow mx-2 appearance-none border border-bordercolor rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="fileName"
                     type="text"
                     onChange={(e) => {
@@ -28,34 +28,72 @@ const FileName = ({ fName, setfName, submitFun, label = "", placeholder = "", bt
 
                 {
                     btnName == "Create File" && <>
-                    <p className="text-black text-end h-full py-3 text-[20px]">.</p>
-                    <select
-                        class="shadow  mx-2 appearance-none w-32 border border-red-500 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="fileName"
-                        type="text"
-                        onChange={(e) => {
-                            setfName(prev => {
-                                return {
-                                    ...prev,
-                                    ext: e.target.value
-                                }
-                            })
-                        }}
-                        value={fName.ext}
-                        placeholder={placeholder}>
+                        <p className="text-black text-end h-full py-3 text-[20px]">.</p>
+                        <select
+                            class="shadow  mx-2 appearance-none w-32 border border-bordercolor rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            id="fileName"
+                            type="text"
+                            onChange={(e) => {
+                                setfName(prev => {
+                                    return {
+                                        ...prev,
+                                        ext: e.target.value
+                                    }
+                                })
+                            }}
+                            value={fName.ext}
+                            placeholder={placeholder}>
 
-                        <option disabled value={""} selected>File Ext</option>
-                        <option value={".ed"}>ed</option>
-                        <option value={".note"}>note</option>
-                        <option value={".lt"}>lt</option>
-                        <option value={".readme"}>readme</option>
-                    </select>
+                            <option disabled value={""} selected>File Ext</option>
+                            <option value={".ed"}>ed</option>
+                            <option value={".note"}>note</option>
+                            <option value={".lt"}>lt</option>
+                            <option value={".readme"}>readme</option>
+                        </select>
+                    </>
+                }
+
+                {
+                    btnName == "Add Status" && <>
+
+                        {/* <input
+                            class="shadow  mx-2 appearance-none w-32 border border-red-500 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            id="color"
+                            type="color"
+                            onChange={(e) => {
+
+                                console.log(e.target,"dsdadadasdas")
+                                // setfName(prev => {
+                                //     return {
+                                //         ...prev,
+                                //         ext: e.target.value
+                                //     }
+                                // })
+                            }}
+                            value={fName.ext}
+                            placeholder={placeholder}/> */}
+
+                        <input
+                            type="color"
+                            class="p-1 h-10 w-14 block bg-transparent border border-bordercolor cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:border-bordercolor"
+                            id="hs-color-input"
+                            defaultValue="#2563eb"
+                            value={fName.ext}
+                            onChange={(e) => {
+                                setfName(prev => {
+                                    return {
+                                        ...prev,
+                                        ext: e.target.value
+                                    }
+                                })
+                            }}
+                            title="Choose your color"></input>
                     </>
                 }
             </div>
 
             <button
-                class="bg-red-500 mx-2 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                class="bg-red-500 mx-2 hover:bg-red-700 text-col py-1 px-2 rounded focus:outline-none focus:shadow-outline"
                 onClick={() => {
                     submitFun()
                 }}

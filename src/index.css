@@ -1,6 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer utilities {
+
+  .scrollbar::-webkit-scrollbar {
+    display: block;
+  }
+
+  .scrollbar {
+    -ms-overflow-style: auto;
+    scrollbar-width: 1px;
+  }
+
+
+  ::-webkit-scrollbar {
+    display: block;
+  }
+}
+
 /* 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

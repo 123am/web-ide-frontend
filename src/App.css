@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer utilities {
+
+  .scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar {
+    -ms-overflow-style: auto;
+    scrollbar-width: 1px;
+  }
+
+
+  ::-webkit-scrollbar {
+    display: block;
+  }
+}
+
 /* #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -74,11 +92,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .draggable {
-  background-color: red;
   color: aliceblue;
   margin: 10px;
   cursor: pointer;
