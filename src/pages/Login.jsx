@@ -46,8 +46,8 @@ const Login = () => {
 
 
     return <>
-    <div className="flex flex-col md:flex-row w-[100vw] items-center">
-            <div className='flex flex-col items-center h-[20vh] md:h-[100vh] bg-primary text-center w-[100vw] md:w-[50vw] justify-center'>
+    <div className="flex flex-col md:flex-row h-[100vh] w-[100vw] items-center">
+            <div className='flex flex-col items-center h-[50vh] md:h-[100vh] bg-primary text-center w-[100vw] md:w-[50vw] justify-center'>
                 <h1 className='text-4xl my-2 text-white'>
                     Welcome to Online IDE
                 </h1>
